@@ -1,0 +1,14 @@
+{
+  "name": "line-character-bot",
+  "version": "0.1.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "@line/bot-sdk": "^7.6.0",
+    "@google/generative-ai": "^0.7.0"
+  }
+}
