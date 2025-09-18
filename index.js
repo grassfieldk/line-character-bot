@@ -6,7 +6,6 @@ import { getGeminiReply } from './gemini.js';
 
 dotenvConfig();
 
-
 const lineConfig = {
   channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN,
   channelSecret: process.env.LINE_CHANNEL_SECRET
@@ -17,17 +16,23 @@ const app = express();
 app.post('/webhook', line.middleware(lineConfig), async (req, res) => {
   const events = req.body.events;
   const client = new line.Client(lineConfig);
+
   try {
     await Promise.all(events.map(async event => {
       if (event.type === 'message' && event.message.type === 'text') {
         const userMessage = event.message.text;
+        console.log('[LINE] Received a message:\n', userMessage);
+
         let replyText = '';
         try {
           replyText = await getGeminiReply(userMessage);
+
         } catch (err) {
           console.error('Gemini API error:', err);
-          replyText = '[ERROR] エラーが発生しました。\n時間をおいて再度試してください。\nしばらく経っても問題が解決しない場合、管理者へ問い合わせてください。';
+          replyText = '[システム] エラーが発生しました。\n時間をおいて再度試してください。\nしばらく経っても問題が解決しない場合、管理者へ問い合わせてください。';
+          console.log('[LINE] Reply message:\n', replyText);
         }
+
         return client.replyMessage(event.replyToken, {
           type: 'text',
           text: replyText
@@ -36,13 +41,12 @@ app.post('/webhook', line.middleware(lineConfig), async (req, res) => {
       return Promise.resolve(null);
     }));
     res.status(200).end();
+
   } catch (err) {
-    console.error('LINE reply error:', err);
+    console.error('LINE reply error:\n', err);
     res.status(500).end();
   }
 });
-
-
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
