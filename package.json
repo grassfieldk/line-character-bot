@@ -7,9 +7,16 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "@google/generative-ai": "^0.7.0",
-    "@line/bot-sdk": "^7.6.0",
-    "dotenv": "^17.2.2",
-    "express": "^4.19.2"
+    "@google/generative-ai": "^0.7.1",
+    "@line/bot-sdk": "^7.7.0",
+    "dotenv": "^17.2.3",
+    "express": "^4.22.1"
+  },
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.9.3"
   }
 }
