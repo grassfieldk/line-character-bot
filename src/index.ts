@@ -5,7 +5,7 @@ import {
   WebhookRequestBody,
   validateSignature
 } from '@line/bot-sdk'
-import { getGeminiReply } from './gemini.ts'
+import { getGeminiReply } from './gemini'
 
 dotenvConfig()
 
