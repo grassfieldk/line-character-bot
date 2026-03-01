@@ -1,4 +1,4 @@
-# line-character-bot
+# LINE Character Bot
 
 特定のキャラクターになりきって会話を行う LINE Bot
 
@@ -7,42 +7,43 @@
 
 1. 依存パッケージのインストール
    ```bash
-   npm install
+   bun install
    ```
-2. サーバー起動
+2. 開発サーバー起動
    ```bash
-   npm start
+   bun run dev
    ```
 
-## PM2 による起動
 
-PM2 を使用することで起動管理が容易になります
+## 本番起動
+
+```bash
+bun run start
+```
+
+
+## PM2 による起動管理
 
 1. PM2 のインストール
    ```bash
-   npm install --global pm2
+   bun install --global pm2
    ```
-2. アプリケーションの登録
+2. アプリケーションを登録
    ```bash
-   pm2 start index.js --name line-character-bot
+   pm2 start --name line-character-bot "bun run start"
    ```
-3. 自動起動設定（任意）
+3. 任意で自動起動を設定
    ```bash
-   pm2 startup # OS と同時に起動
-   pm2 save # 上記設定を保存
+   pm2 startup
+   pm2 save
    ```
 
-登録後、PM2 によるログ閲覧や起動管理ができるようになります
+PM2 登録後は `pm2 logs line-character-bot` などで状態確認と再起動/停止ができます。
 
-```bash
-# 登録済アプリケーション一覧の表示
-pm2 list
-# ログの表示
-pm2 logs line-character-bot
-# アプリケーションの起動
-pm2 start line-character-bot
-# アプリケーションの再起動
-pm2 restart line-character-bot
-# アプリケーションの終了
-pm2 stop line-character-bot
-```
+
+## ローカル検証用 CLI ドライバ
+
+`bun run dev` で Hono サーバーを立ち上げた状態で、別ターミナルから `bun run chat` を実行すると CLI 対話が始まります。CLI は `LINE_CHANNEL_SECRET` を使って署名付き webhook を `http://{TEST_WEBHOOK_HOST or 127.0.0.1}:{TEST_WEBHOOK_PORT or PORT or 8787}/webhook`（`TEST_WEBHOOK_URL` で完全指定可）に投げるため、実際の webhook と同じ処理経路を通って応答を確認できます。
+
+- `GEMINI_USE_STUB=1` を設定すると Gemini API にアクセスせずにスタブ応答を返すため、API キー不要で動作検証できます
+- CLI で `exit` を入力すれば終了します
