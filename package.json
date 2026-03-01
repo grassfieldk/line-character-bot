@@ -7,8 +7,9 @@
     "build": "bun build src/index.ts --outdir dist"
   },
   "dependencies": {
-    "@google/generative-ai": "^0.7.1",
+    "@ai-sdk/xai": "^3.0.60",
     "@line/bot-sdk": "^7.7.0",
+    "ai": "^6.0.105",
     "dotenv": "^17.2.3",
     "hono": "^4.12.3"
   },

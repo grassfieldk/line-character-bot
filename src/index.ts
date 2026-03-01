@@ -5,7 +5,7 @@ import {
   WebhookRequestBody,
   validateSignature
 } from '@line/bot-sdk'
-import { getGeminiReply } from './gemini'
+import { getXaiReply } from './xai'
 
 dotenvConfig()
 
@@ -53,9 +53,9 @@ app.post('/webhook', async (ctx) => {
       console.log('[LINE] Received a message:', userMessage)
       let replyText: string
       try {
-        replyText = await getGeminiReply(userMessage)
+        replyText = await getXaiReply(userMessage)
       } catch (error) {
-        console.error('Gemini API error:', error)
+        console.error('xAI API error:', error)
         replyText = systemErrorReply
       }
       console.log('[LINE] Reply message:', replyText)
