@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "bun run --hot src/index.ts",
     "start": "bun src/index.ts",
-    "chat": "bun src/cli.ts"
+    "chat": "bun src/cli.ts",
+    "build": "bun build src/index.ts --outdir dist"
   },
   "dependencies": {
     "@google/generative-ai": "^0.7.1",
